@@ -1,6 +1,7 @@
 val funcName = "putfunname"
 val group = "cn.cyanbukkit.${funcName}"
 val version = "0.1"
+val mainPlugin = "SiModuleGame"
 
 bukkit {
     name = rootProject.name
@@ -8,6 +9,7 @@ bukkit {
     authors = listOf("Your Name")
     website = "https://cyanbukkit.cn"
     main = "${group}.cyanlib.launcher.CyanPluginLauncher"
+    loadBefore = listOf(mainPlugin)
 }
 
 plugins {
