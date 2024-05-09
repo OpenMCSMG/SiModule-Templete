@@ -20,15 +20,8 @@ object ModeEntry : Command("mode") {
                 if (mode.value == args[0]) {
                     val info = args.sliceArray(1 until args.size)
                     val parameterTypes = method.parameterTypes
-                    val convertedArgs = Array<Any>(info.size) { i ->
-                        when (parameterTypes[i + 1]) { // i + 1 because the first parameter is Player
-                            Double::class.java -> info[i].toDouble()
-                            Int::class.java -> info[i].toInt()
-                            String::class.java -> info[i]
-                            else -> throw IllegalArgumentException("Unsupported parameter type")
-                        }
-                    }
-                    method.invoke(hand, p, *convertedArgs)
+                    val convertedArgs = anise(info, parameterTypes, p)
+                    method.invoke(hand, *convertedArgs)
                     return true
                 }
             }
@@ -36,4 +29,24 @@ object ModeEntry : Command("mode") {
         p.sendMessage("§c未找到模式")
         return true
     }
+
+
+
+    fun anise(
+        info: Array<out String>,
+        parameterTypes: Array<Class<*>>,
+        p: Player
+    ): Array<Any> {
+        val convertedArgs = Array<Any>(info.size) { i ->
+            when (parameterTypes[i + 1]) { // i + 1 because the first parameter is Player
+                Double::class.java -> info[i].toDouble()
+                Int::class.java -> info[i].toInt()
+                String::class.java -> info[i]
+                Player::class.java -> p
+                else -> throw IllegalArgumentException("Unsupported parameter type")
+            }
+        }
+        return convertedArgs
+    }
+    
 }
