@@ -4,6 +4,7 @@ import cn.cyanbukkit.putfunname.GameHandle
 import cn.cyanbukkit.putfunname.utils.Mode
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 
 object ModeEntry : Command("mode") {
     override fun execute(sender: CommandSender, commandLabel: String, args: Array<out String>): Boolean {
@@ -32,12 +33,12 @@ object ModeEntry : Command("mode") {
 
 
 
-    fun anise(
+    private fun anise(
         info: Array<out String>,
         parameterTypes: Array<Class<*>>,
         p: Player
     ): Array<Any> {
-        val convertedArgs = Array<Any>(info.size) { i ->
+        val convertedArgs = Array(info.size) { i ->
             when (parameterTypes[i]) { // i + 1 because the first parameter is Player
                 Double::class.java -> info[i].toDouble()
                 Int::class.java -> info[i].toInt()
